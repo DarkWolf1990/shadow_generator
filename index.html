@@ -1,5 +1,3 @@
-<!--11-00-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,8 +70,8 @@
       <div class="card">
         <div class="card-header bg-primary"> Настройки:</div>
         <div class="card-body">
-          <label for="font-size"> Размер шрифта </label>
-          <input class="custom-range" id="font-size" type="range" min="8" max="40" step="1" value="40">
+          <label for="font_size"> Размер шрифта </label>
+          <input class="custom-range" id="font_size" type="range" min="8" max="40" step="1" value="40">
           <label for="offset_x"> Смещение по оси Х </label>
           <input class="custom-range" id="offset_x" type="range" min="-15" max="15" step="1" value="4">
           <label for="offset_y"> Смещение по оси У </label>
@@ -117,22 +115,47 @@
                        color,
                        rgba
                      }) {
-    var cssStyles = offset_x + 'px' + offset_y + 'px' + blur + 'px' + rgba;
+    var cssStyles = offset_x + 'px ' + offset_y + 'px ' + blur + 'px ' + rgba;
     $('h1').css('text-shadow', cssStyles);
-    $('#resultHex').val('background-color: ' + color + '\nopacity: ' + opacity + '\nfont-size: ' + font_size + 'px;');
-    $('#resultRgba').val('text-shadow: ' + offset_x + 'px ' + offset_y + 'px ' + blur + 'px ' + rgba + ';\nfont-size: '
-      + font_size + 'px;');
+    $('#resultHex').val('background-color: ' +color+';\nopacity: '+opacity+'\nfont-size: '+font_size+'px;');
+    $('#resultRgba').val('text-shadow: ' +offset_x +'px '+offset_y+'px '+blur+'px '+rgba+';\nfont-size: '+font_size+'px;');
   }
-    cssShadow({
-      font_size: 40,
-      offset_x: 4,
-      offset_y: -1,
-      blur: 0,
-      opacity: 1,
-      color: '#ff0000',
-      rgba: 'rgba(255, 0, 0, 1)'
-    });
 
+  cssShadow({
+    font_size: 40,
+    offset_x: 4,
+    offset_y: -1,
+    blur: 0,
+    opacity: 1,
+    color: '#ff0000',
+    rgba: 'rgba(255, 0, 0, 1)'
+  });
+  $(document).on('input change', 'input', function () {
+    var font_size = $('#font_size').val();
+    var offset_x = $('#offset_x').val();
+    var offset_y = $('#offset_y').val();
+    var blur = $('#blur').val();
+    var opacity = $('#opacity').val();
+    var color = $('input[type="color"]').val() + '';
+    var red16 = color[1]+''+color[2];
+    var green16 = color[3]+''+color[4];
+    var blue16 = color[5]+''+color[6];
+    var red10 = parseInt(red16,16);
+    var green10 = parseInt(green16,16);
+    var blue10 = parseInt(blue16,16)
+    var rgba = 'rgba(' + red10 + ', ' + green10 + ', ' + blue10 + ', ' + opacity + ')';
+
+    $('h1').css('fontSize', font_size + 'px');
+    cssShadow({
+      font_size: font_size,
+      offset_x: offset_x,
+      offset_y: offset_y,
+      blur: blur,
+      opacity: opacity,
+      color: color,
+      rgba: rgba
+    });
+  })
 </script>
 </body>
 </html>
